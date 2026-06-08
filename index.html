@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstoqueFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header id="navbar" class="navbar oculto">
+    <h1 class="navbar__titulo">EstoqueFácil</h1>
+    <button id="btnSair" class="navbar__sair">Sair</button>
+  </header>
+
+  <main id="telaAuth" class="tela-auth">
+    <div class="auth-card">
+
+      <form id="formLogin" class="auth-form">
+        <h2 class="auth-card__titulo">Entrar</h2>
+
+        <label for="loginEmail">E-mail</label>
+        <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+
+        <label for="loginSenha">Senha</label>
+        <input type="password" id="loginSenha" placeholder="••••••••" required>
+
+        <p id="erroLogin" class="msg-erro"></p>
+
+        <button type="submit" class="btn btn--primario">Entrar</button>
+
+        <p class="auth-troca">
+          Não tem conta?
+          <a href="#" id="linkIrCadastro">Cadastre-se</a>
+        </p>
+      </form>
+
+      <form id="formCadastro" class="auth-form oculto">
+        <h2 class="auth-card__titulo">Criar conta</h2>
+
+        <label for="cadNome">Nome</label>
+        <input type="text" id="cadNome" placeholder="Seu nome" required>
+
+        <label for="cadEmail">E-mail</label>
+        <input type="email" id="cadEmail" placeholder="seu@email.com" required>
+
+        <label for="cadSenha">Senha</label>
+        <input type="password" id="cadSenha" placeholder="mínimo 4 caracteres" minlength="4" required>
+
+        <p id="erroCadastro" class="msg-erro"></p>
+
+        <button type="submit" class="btn btn--primario">Cadastrar</button>
+
+        <p class="auth-troca">
+          Já tem conta?
+          <a href="#" id="linkIrLogin">Entrar</a>
+        </p>
+      </form>
+
+    </div>
+  </main>
+
+  <section id="telaProdutos" class="tela-produtos oculto">
+    <div class="conteudo">
+      <h2 class="conteudo__titulo">Meus Produtos</h2>
+
+      <div id="estadoVazio" class="estado-vazio">
+        <p>Nenhum produto cadastrado ainda.</p>
+        <button id="btnAddVazio" class="btn btn--primario">+ Adicionar produto</button>
+      </div>
+
+      <div id="estadoLista" class="oculto">
+        <div class="tabela-wrapper">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Tipo</th>
+                <th>Qtd.</th>
+                <th>Preço</th>
+                <th>Validade</th>
+                <th>Condição</th>
+                <th>Promoção</th>
+                <th>Etiqueta</th>
+                <th>Autor</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="corpoTabela"></tbody>
+          </table>
+        </div>
+
+        <button id="btnAddLista" class="btn btn--primario btn--add-lista">
+          + Adicionar novo produto
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <div id="overlayProduto" class="overlay oculto">
+    <div class="popup">
+      <button id="fecharPopupProduto" class="popup__fechar" aria-label="Fechar">&times;</button>
+      <h2 id="tituloPopupProduto" class="popup__titulo">Adicionar produto</h2>
+
+      <form id="formProduto" class="form-produto">
+        <input type="hidden" id="produtoId">
+
+        <label for="prodNome">Nome *</label>
+        <input type="text" id="prodNome" required>
+
+        <label for="prodDescricao">Descrição (opcional)</label>
+        <textarea id="prodDescricao" rows="2"></textarea>
+
+        <label for="prodTipo">Tipo *</label>
+        <select id="prodTipo" required>
+          <option value="">Selecione...</option>
+          <option value="Alimentos">Alimentos</option>
+          <option value="Bebidas">Bebidas</option>
+          <option value="Vestuário">Vestuário</option>
+          <option value="Eletrônicos">Eletrônicos</option>
+          <option value="Higiene e Beleza">Higiene e Beleza</option>
+          <option value="Limpeza">Limpeza</option>
+          <option value="Papelaria">Papelaria</option>
+          <option value="Móveis e Decoração">Móveis e Decoração</option>
+          <option value="Brinquedos">Brinquedos</option>
+          <option value="Outros">Outros</option>
+        </select>
+
+        <div class="form-linha">
+          <div>
+            <label for="prodQtd">Quantidade *</label>
+            <input type="number" id="prodQtd" min="0" value="1" required>
+          </div>
+          <div>
+            <label for="prodPreco">Preço (R$) *</label>
+            <input type="number" id="prodPreco" min="0" step="0.01" value="0.00" required>
+          </div>
+        </div>
+
+        <label for="prodValidade">Data de validade</label>
+        <input type="date" id="prodValidade">
+
+        <fieldset class="form-fieldset">
+          <legend>Condição</legend>
+          <label class="inline">
+            <input type="radio" name="prodCondicao" value="Novo" checked> Novo
+          </label>
+          <label class="inline">
+            <input type="radio" name="prodCondicao" value="Usado"> Usado
+          </label>
+        </fieldset>
+
+        <label class="inline">
+          <input type="checkbox" id="prodPromocao"> Produto em promoção
+        </label>
+
+        <label for="prodEstoqueMin">Nível de alerta de estoque mínimo: <span id="valorRange">5</span></label>
+        <input type="range" id="prodEstoqueMin" min="0" max="50" value="5">
+
+        <label for="prodCor">Cor da etiqueta</label>
+        <input type="color" id="prodCor" value="#2563eb">
+
+        <p id="erroProduto" class="msg-erro"></p>
+
+        <div class="form-botoes">
+          <button type="button" id="cancelarProduto" class="btn btn--secundario">Cancelar</button>
+          <button type="submit" class="btn btn--primario">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="overlayExcluir" class="overlay oculto">
+    <div class="popup popup--pequeno">
+      <h2 class="popup__titulo">Confirmar exclusão</h2>
+      <p id="textoExcluir">Tem certeza que deseja excluir este produto?</p>
+      <div class="form-botoes">
+        <button id="cancelarExcluir" class="btn btn--secundario">Cancelar</button>
+        <button id="confirmarExcluir" class="btn btn--perigo">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
